@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bws_python"
+authors = [{name = "Joshua Halbert"}]
+version = "0.1.0"
+license = {file = "LICENSE"}
+description= "Python wrapper for Bitwarden Secrets Manager"
+readme = "README.md"
+
+[project.urls]
+homepage = "https://github.com/jdhalbert/bitwarden_secrets_manager_python"
