@@ -1,4 +1,4 @@
-# pylint: disable=logging-format-interpolation, logging-fstring-interpolation, line-too-long
+# pylint: disable=logging-format-interpolation, logging-fstring-interpolation, line-too-long, invalid-name
 
 """ Module contains the BWS (Bitwarden Secrets Manager) class, a Python wrapper for the `bws` CLI application. """
 
@@ -30,9 +30,9 @@ class BWS:
             bws_path (str, optional): Path to call `bws` or `bws.exe` application. Defaults to 'bws', which works if
                 the parent directory is in your system's PATH variable.
         """
+        self._set_token(bws_access_token=bws_access_token)
         self._BWS_APPLICATION_PATH = Path(bws_path)
         self._PROJECT_NAME = project_name
-        self._set_token(bws_access_token=bws_access_token)
         self._PROJECT_ID = self._get_project_id()
         self._SECRETS = self._get_secrets_from_bws()
 
@@ -46,7 +46,7 @@ class BWS:
 
     def __contains__(self, item):
         return item in self._SECRETS
-    
+
     def _set_token(self, bws_access_token:str|None) -> None:
         """ If a bws_access_token is not provided, check is one is already set as an environment variable.
 
@@ -95,7 +95,7 @@ class BWS:
             return subprocess.run([self._BWS_APPLICATION_PATH] + cl_args + ['-t', self._TOKEN], capture_output=True,
                                   text=True, check=check)
         except subprocess.CalledProcessError as cpe:
-            logger.critical('CalledProcessError: ' + cpe.stderr)
+            logger.critical(f'CalledProcessError: {cpe.stderr}')
             logger.critical('Note: access_token value redacted from list of commands in exception raised below:')
             cpe.cmd.pop() # remove the access_token value
             raise cpe
@@ -133,7 +133,7 @@ class BWS:
             list[tuple[str,str]]: List of secrets like [(key, value)].
         """
         return self._SECRETS.items()
-    
+
     def as_dict(self) -> dict[str,str]:
         """ Get the internal _secrets dict containing all project secrets.
 
