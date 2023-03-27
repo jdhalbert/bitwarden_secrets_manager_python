@@ -15,7 +15,7 @@ You must also have opted-in to the Bitwarden Secrets Manager beta and have gener
 
 ## Import
 ```
-from bws import BWS
+from bws_python import BWS
 ```
 
 Optionally use `logging` to see useful information, especially if using in a Jupyter Notebook or troubleshooting:
