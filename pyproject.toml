@@ -1,14 +1,16 @@
-[build-system]
-requires = ["flit_core >=3.4,<4"]
-build-backend = "flit_core.buildapi"
-
-[project]
-name = "bws_python"
-authors = [{name = "Joshua Halbert"}]
-version = "0.1.04"
-license = {file = "LICENSE"}
-description= "Python wrapper for Bitwarden Secrets Manager"
+[tool.poetry]
+name = "bitwarden_secrets_manager_python"
+version = "0.2.00"
+description = "Python wrapper for Bitwarden Secrets Manager"
+authors = ["jdhalbert <jdhalbert@gmail.com>"]
+license = "MIT"
 readme = "README.md"
+packages = [{include = "bitwarden_secrets_manager_python"}]
 
-[project.urls]
-homepage = "https://github.com/jdhalbert/bitwarden_secrets_manager_python"
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

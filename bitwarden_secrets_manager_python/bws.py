@@ -81,21 +81,20 @@ class BWS:
         raise ValueError(f'Project "{self._PROJECT_NAME}" not found. Choose from projects: '
                          f'{[p["name"] for p in projects]}')
 
-    def _make_call(self, cl_args:list, check:bool=True) -> subprocess.CompletedProcess:
+    def _make_call(self, cl_args:list) -> str:
         """ Make a call to `bws` with the provided args. Usually use self.call_and_return_text() instead of this.
 
         Args:
             cl_args (list): Args in list format (e.g. ['list', 'projects'])
-            check (bool, optional): If true, raises exception on failure. Defaults to True.
 
         Returns:
-            subprocess.CompletedProcess: Call results. (Use .stdout and .stderr to get text results.)
+            str: Call results.
         """
         try:
-            return subprocess.run([self._BWS_APPLICATION_PATH] + cl_args + ['-t', self._TOKEN], capture_output=True,
-                                  text=True, check=check)
+            return subprocess.check_output([self._BWS_APPLICATION_PATH] + cl_args + ['-c', 'no', '-t', self._TOKEN],
+                                           text=True)
         except subprocess.CalledProcessError as cpe:
-            logger.critical(f'CalledProcessError: {cpe.stderr}')
+            logger.critical(f'CalledProcessError: {cpe.output}')
             logger.critical('Note: access_token value redacted from list of commands in exception raised below:')
             cpe.cmd.pop() # remove the access_token value
             raise cpe
@@ -121,7 +120,7 @@ class BWS:
         Returns:
             str|dict|list: stdout
         """
-        text:str = self._make_call(cl_args=cl_args).stdout
+        text:str = self._make_call(cl_args=cl_args)
         if print_to_console:
             print(text)
         return json.loads(text) if as_json else text
