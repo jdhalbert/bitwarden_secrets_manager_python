@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bitwarden_secrets_manager_python"
-version = "0.2.00"
+version = "1.0.00"
 description = "Python wrapper for Bitwarden Secrets Manager"
 authors = ["jdhalbert <jdhalbert@gmail.com>"]
 license = "MIT"
@@ -10,6 +10,9 @@ packages = [{include = "bitwarden_secrets_manager_python"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
 
 [build-system]
 requires = ["poetry-core"]
